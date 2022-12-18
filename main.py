@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from config.config import *
 
 
-class TestWebModules():
+class TestWebModules:
     def __init__(
         self, 
         web_driver_path: str = None, 

@@ -15,6 +15,10 @@ class TestSearchSuite(unittest.TestCase):
         web_url: str = None
     ):
         TC_name = f"test_{TC_name}" if TC_name else "general_test"
+        if TC_name == "general_test" and input_text is None:
+            raise ValueError("Must specify input text if want use 'general_test'")
+        if not hasattr(self, TC_name):
+            raise AttributeError("TC_name not implemented")
         super().__init__(TC_name)
         self.input_text = input_text
         self.need_check_output = need_check_output
@@ -98,5 +102,5 @@ if __name__ == "__main__":
     PATH = "chromedriver/chromedriver.exe"
     WEB_URL = "https://tinhte.vn/"
     suite = unittest.TestSuite()
-    suite.addTest(TestSearchSuite(TC_name="searchAStringWithUnicodeCharacter",driver_path=PATH,web_url=WEB_URL))
+    suite.addTest(TestSearchSuite(TC_name="searchAStringWisthUnicodeCharacter",driver_path=PATH,web_url=WEB_URL))
     unittest.TextTestRunner().run(suite)
