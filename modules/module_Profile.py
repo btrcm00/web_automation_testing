@@ -26,7 +26,7 @@ class TestProfileSuite():
       self.driver.get("https://tinhte.vn/account/personal-details")
       self.driver.find_element(By.CSS_SELECTOR, ".OverlayTrigger > .img").click()
       self.driver.find_element(By.ID, "ctrl_avatar").click()
-      self.driver.find_element(By.ID, "ctrl_avatar").send_keys("\materials\random.txt")
+      self.driver.find_element(By.ID, "ctrl_avatar").send_keys("\materials\sample.txt")
       self.driver.find_element(By.CSS_SELECTOR, ".baseHtml").click()
       self.driver.find_element(By.CSS_SELECTOR, ".OverlayCloser:nth-child(1)").click()
       self.driver.close()
