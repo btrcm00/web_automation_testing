@@ -1,4 +1,5 @@
 /chromedriver/*
+/config/config.py
 
 __pycache__/
 .idea

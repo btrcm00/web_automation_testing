@@ -1,0 +1,2 @@
+from modules.module_Search import TestSearchSuite
+from modules.module_Comment import TestCommentSuite
