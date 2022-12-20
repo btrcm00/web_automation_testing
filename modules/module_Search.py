@@ -14,15 +14,11 @@ class TestSearchSuite(unittest.TestCase):
             self,
             config,
             input_text: str = None,
-            need_check_output: bool = True,
             **kwargs,
     ):
         super().__init__("general_test")
         self.config = config
         self.input_text = input_text
-        self.need_check_output = need_check_output
-        if self.input_text is None:
-            self.need_check_output = False
 
     def setUp(self):
         self.driver = webdriver.Chrome(self.config.driver_path)
@@ -47,13 +43,14 @@ class TestSearchSuite(unittest.TestCase):
     def _check_output(self):
         not_found_ele = "//div[@id=\'content\']/div/div/div/div/div[2]/h1"
         found_ele = "//div[@id=\'content\']/div/div/div/div/div/div[2]/h1"
-        self.assertTrue(self.is_element_present(By.XPATH, not_found_ele) or \
-                        self.is_element_present(By.XPATH, found_ele))
+        return self.is_element_present(By.XPATH, not_found_ele) or self.is_element_present(By.XPATH, found_ele)
+        
 
     def general_test(self):
         self._base_step(self.input_text)
-        if self.need_check_output:
-            self._check_output()
+        output = self._check_output()
+        print(888888888888,output)
+        return "PASSED" if output else "FAILED"
 
 
 if __name__ == "__main__":

@@ -42,28 +42,41 @@ class TestWebModules:
                                         **data))
         unittest.TextTestRunner().run(suite)
 
-    def run_script_with_testdata(self, data_file_name: str):
-        data_file_path = f"{self.config.input_data_folder}/{data_file_name}"
+    def load_data(self, file_name):
+        data_file_path = f"{self.config.input_data_folder}/{file_name}"
         if not os.path.isfile(data_file_path):
             raise "FILE NOT FOUND"
-        test_data = pd.read_excel(data_file_path, sheet_name="search")
-        for idx in range(1, test_data.shape[0]):
-            input_data = {**test_data.iloc[idx][self.sheet_params]}
-            self.test_func(data=input_data)
+        data = pd.read_excel(data_file_path, sheet_name=self.module_name)
+        
+        return data
+    
+    def save_data(self, data, file_name):
+        data_file_path = f"{self.config.output_data_folder}/{file_name}"
+        pd.DataFrame().from_dict(data).to_excel(data_file_path, sheet_name=self.module_name)
+        
+    def run_script_with_testdata(self, data_file_name: str):
+        test_data = self.load_data(data_file_name)
 
+        output_data = {
+            col: list(test_data[col].values) for col in test_data.columns
+        }
+        for idx in range(1, 3):# test_data.shape[0]):
+            input_data = {**test_data.iloc[idx][self.sheet_params]}
+            output = self.test_func(data=input_data)
+            output_data["output"][idx] = output
+
+        self.save_data(output_data, data_file_name)
 
 if __name__ == "__main__":
     # Ví dụ test module Search
     config = Config()
     # t = TestWebModules(module_name="comment", config=config)
     # data = {"input_text": "hay!",
-    #               "need_check_output": True,
     #               "post_url": "https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"}
     # t.test_func(data=data)
 
     t = TestWebModules(module_name="search", config=config)
     data = {"input_text": "hay!",
-            "need_check_output": True,
             "post_url": "https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"}
     # t.test_func(data=data)
     t.run_script_with_testdata(data_file_name="data_example.xlsx")

@@ -15,7 +15,6 @@ class TestCommentSuite(unittest.TestCase):
             self,
             config,
             input_text: str = None,
-            need_check_output: bool = True,
             web_login_func=None,
             post_url: str = None,
             **kwargs,
@@ -26,7 +25,6 @@ class TestCommentSuite(unittest.TestCase):
 
         self.config = config
         self.input_text = input_text
-        self.need_check_output = need_check_output
         self.web_login_func = web_login_func
         self.post_url = post_url
 
@@ -57,13 +55,13 @@ class TestCommentSuite(unittest.TestCase):
         return True
 
     def _check_output(self):
-        self.assertTrue(self.is_element_present(By.XPATH, f"//a[contains(text(),\'{self.config.web_username}\')]"))
+        output = self.is_element_present(By.XPATH, f"//a[contains(text(),\'{self.config.web_username}\')]")
+        return "PASSED" if output else "FAILED"
 
     def general_test(self):
         self._base_step(self.input_text)
-        if self.need_check_output:
-            self._check_output()
-
+        return self._check_output()
+            
 
 if __name__ == "__main__":
     from config.config import Config
