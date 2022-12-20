@@ -40,6 +40,13 @@ class TestSignInSuite(unittest.TestCase):
         self.driver.quit()
     
     def test_noInput(self):
+        self.driver.get("https://tinhte.vn/")
+        WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, ".profile-button > .avatar")))
+        self.driver.find_element(By.CSS_SELECTOR, ".profile-button > .avatar").click()
+        self.driver.find_element(By.LINK_TEXT, "Đăng xuất").click()
+        time.sleep(2)
+        self.driver.find_element(By.LINK_TEXT, "Đăng xuất").click()
+        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".tinhte-logo")))
         self.driver.get("https://tinhte.vn/login/")
         WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.ID, "ctrl_pageLogin_login2")))
         time.sleep(2)
@@ -73,12 +80,7 @@ class TestSignInSuite(unittest.TestCase):
         self.driver.find_element(By.ID, "ctrl_pageLogin_login2").send_keys("minhbtcm00")
         self.driver.find_element(By.ID, "ctrl_pageLogin_password2").send_keys("1813060")
         self.driver.find_element(By.CSS_SELECTOR, ".button:nth-child(4)").click()
-        time.sleep(2)
-        self.driver.find_element(By.CSS_SELECTOR, ".profile-button > .avatar").click()
-        self.driver.find_element(By.LINK_TEXT, "Đăng xuất").click()
-        time.sleep(2)
-        self.driver.find_element(By.LINK_TEXT, "Đăng xuất").click()
-        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".tinhte-logo")))
+        WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, ".profile-button > .avatar")))
         self.driver.close()
 
 if __name__ == "__main__":
