@@ -12,7 +12,8 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class TestVisitareview():
   def setup_method(self, method):
-    self.driver = webdriver.Chrome()
+    self.driver = webdriver.Chrome(self.driver_path)
+    self.driver.get(self.web_url)
     self.vars = {}
   
   def teardown_method(self, method):
@@ -26,33 +27,33 @@ class TestVisitareview():
       return set(wh_now).difference(set(wh_then)).pop()
   
   def test_bthreadG(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.execute_script("window.scrollTo(0,2003)")
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-1560371842:nth-child(1) > .jsx-1560371842 > .thread-title").click()
     self.driver.find_element(By.CSS_SELECTOR, ".hidden-xs > .jsx-725335046 svg").click()
     self.driver.find_element(By.CSS_SELECTOR, ".burger > .jsx-3867722346:nth-child(2)").click()
   
   def test_bthreadU(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.CSS_SELECTOR, ".first > .jsx-3501530503 > .jsx-3808261869 > .jsx-3808261869").click()
     self.driver.find_element(By.CSS_SELECTOR, ".hidden-xs > .jsx-725335046 svg").click()
   
   def test_rLoveG(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(974, 1047)
     self.driver.find_element(By.LINK_TEXT, "Thử soi da, mắt từ chế độ Chân Dung Studio trên iPhone 14 Pro").click()
     self.driver.find_element(By.CSS_SELECTOR, ".thread-like").click()
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-171388687 > svg").click()
   
   def test_rLoveU(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.LINK_TEXT, "Pod 2: Món phụ kiện đáng và nên mua nhất của anh em đang dùng đồng hồ Coros").click()
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-2265512871 > .jsx-171388687 .reaction-text").click()
   
   def test_shareG(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.LINK_TEXT, "Thử soi da, mắt từ chế độ Chân Dung Studio trên iPhone 14 Pro").click()
     self.vars["window_handles"] = self.driver.window_handles
@@ -84,7 +85,7 @@ class TestVisitareview():
     self.driver.close()
   
   def test_shareUNC(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-2206250852:nth-child(1) > .jsx-2206250852 > .jsx-2206250852 > .jsx-2206250852 > .jsx-2206250852").click()
     self.vars["window_handles"] = self.driver.window_handles
@@ -99,7 +100,7 @@ class TestVisitareview():
     self.driver.close()
   
   def test_subcribeG(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-3834913322:nth-child(1) > .jsx-3501530503 > .jsx-3501530503 > .jsx-3501530503 > .jsx-3501530503:nth-child(1) > .jsx-3501530503:nth-child(1)").click()
     self.driver.find_element(By.LINK_TEXT, "Thử soi da, mắt từ chế độ Chân Dung Studio trên iPhone 14 Pro").click()
@@ -108,7 +109,7 @@ class TestVisitareview():
     self.driver.find_element(By.CSS_SELECTOR, ".hidden-xs > .jsx-396757025 path").click()
   
   def test_subcribeU(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     element = self.driver.find_element(By.CSS_SELECTOR, ".jsx-1328309378:nth-child(4) .preview-mask")
     actions = ActionChains(self.driver)
@@ -130,17 +131,17 @@ class TestVisitareview():
   def test_vAuser(self):
   
   def test_vPcom(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(1936, 1056)
     self.driver.find_element(By.CSS_SELECTOR, "#ontheroad .jsx-131847778:nth-child(2)").click()
   
   def test_vTasGH(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(974, 1040)
     self.driver.find_element(By.LINK_TEXT, "Mời tham gia bình chọn Điện thoại trong TTBC22, cơ hội nhận giải đặc biệt và combo quà 28 triệu").click()
   
   def test_vTasGI(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     element = self.driver.find_element(By.CSS_SELECTOR, ".jsx-934348644:nth-child(1) > .jsx-2238569880 .thread-title")
     actions = ActionChains(self.driver)
@@ -148,17 +149,17 @@ class TestVisitareview():
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-934348644:nth-child(1) > .jsx-2238569880 .thread-title").click()
   
   def test_vTasUH(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.LINK_TEXT, "Hậu World Cup: Các cầu thủ và HLV đeo đồng hồ gì tới Qatar?").click()
   
   def test_vTasUI(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.CSS_SELECTOR, ".first > .jsx-3501530503 > .jsx-3808261869 > .jsx-3808261869").click()
   
   def test_vTauthor(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(974, 1040)
     self.driver.execute_script("window.scrollTo(0,2011)")
     self.driver.execute_script("window.scrollTo(0,2383)")
@@ -172,7 +173,7 @@ class TestVisitareview():
     actions.move_to_element(element, 0, 0).perform()
   
   def test_vads(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.vars["window_handles"] = self.driver.window_handles
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-306557543 > .jsx-306557543").click()
@@ -180,9 +181,15 @@ class TestVisitareview():
     self.driver.switch_to.window(self.vars["win2974"])
   
   def test_vauthor(self):
-    self.driver.get("https://tinhte.vn/")
+    self.driver.get(self.web_url)
     self.driver.set_window_size(976, 1040)
     self.driver.execute_script("window.scrollTo(0,554)")
     self.driver.find_element(By.LINK_TEXT, "Pod 2: Món phụ kiện đáng và nên mua nhất của anh em đang dùng đồng hồ Coros").click()
     self.driver.find_element(By.LINK_TEXT, "Trần Hoàng Long.").click()
   
+if __name__ == "__main__":
+    PATH = "chromedriver/chromedriver.exe"
+    WEB_URL = "https://tinhte.vn/"
+    suite = unittest.TestSuite()
+    suite.addTest(TestProfileSuite(testcase_name="changeAvatar", driver_path=PATH, web_url=WEB_URL))
+    unittest.TextTestRunner().run(suite)
