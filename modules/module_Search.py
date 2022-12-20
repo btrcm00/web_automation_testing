@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append(".")
+
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,26 +13,20 @@ class TestSearchSuite(unittest.TestCase):
     def __init__(
             self,
             config,
-            testcase_name: str = None,
             input_text: str = None,
             need_check_output: bool = True,
             **kwargs,
     ):
-        testcase_name = f"test_{testcase_name}" if testcase_name else "general_test"
-        if testcase_name == "general_test" and input_text is None:
-            raise ValueError("Must specify input text if want use 'general_test'")
-        if not hasattr(self, testcase_name):
-            raise AttributeError(f"{testcase_name} not implemented")
-        super().__init__(testcase_name)
+        super().__init__("general_test")
+        self.config = config
         self.input_text = input_text
         self.need_check_output = need_check_output
-        self.driver_path = config.path
-        self.web_url = config.web_url
+        if self.input_text is None:
+            self.need_check_output = False
 
     def setUp(self):
-        self.driver = webdriver.Chrome(self.driver_path)
-        self.driver.get(self.web_url)
-        self.vars = {}
+        self.driver = webdriver.Chrome(self.config.driver_path)
+        self.driver.get(self.config.web_url)
 
     def tearDown(self):
         self.driver.quit()
@@ -57,37 +55,10 @@ class TestSearchSuite(unittest.TestCase):
         if self.need_check_output:
             self._check_output()
 
-    def test_searchALink(self):
-        self.general_test("https://e-learning.hcmut.edu.vn/course/view.php?id=67808")
-
-    def test_searchAStringAndNoSpaceCharacter(self):
-        self.general_test("kiemtraphanmem")
-
-    def test_searchAStringWithHieroglyphicsCharacter(self):
-        self.general_test("ナム人")
-
-    def test_searchAStringWithSpaceCharacter(self):
-        self.general_test("hello hello")
-
-    def test_searchAStringWithSpecialCharacter(self):
-        self.general_test("xin#@$")
-
-    def test_searchAStringWithUnicodeCharacter(self):
-        self.general_test("xin chào")
-
-    def test_searchWithTextHaveAnOnlyCharacter(self):
-        self.general_test("a")
-
-    def test_searchWithTextHaveOnlyOneOrMoreSpaceCharacter(self):
-        self.general_test("  ")
-
-    def test_searchWithoutACharacter(self):
-        self.general_test(need_check_output=False)
-
 
 if __name__ == "__main__":
-    PATH = "chromedriver/chromedriver.exe"
-    WEB_URL = "https://tinhte.vn/"
+    from config.config import Config
+    config = Config()
     suite = unittest.TestSuite()
-    suite.addTest(TestSearchSuite(testcase_name="searchAStringWithUnicodeCharacter", driver_path=PATH, web_url=WEB_URL))
+    suite.addTest(TestSearchSuite(config=config))
     unittest.TextTestRunner().run(suite)
