@@ -1,2 +1,4 @@
 from modules.module_Search import TestSearchSuite
 from modules.module_Comment import TestCommentSuite
+from modules.module_Profile import TestProfileSuite
+from modules.module_SignIn import TestSignInSuite
