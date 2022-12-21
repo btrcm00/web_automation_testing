@@ -1,13 +1,13 @@
-import sys
-sys.path.append(".")
-
-import unittest
-
-from selenium import webdriver
-from selenium.common import NoSuchElementException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
+from selenium.common import NoSuchElementException
+from selenium import webdriver
+import time
+import unittest
+import sys
+
+sys.path.append(".")
 
 
 class TestCommentSuite(unittest.TestCase):
@@ -15,7 +15,6 @@ class TestCommentSuite(unittest.TestCase):
             self,
             config,
             input_text: str = None,
-            need_check_output: bool = True,
             web_login_func=None,
             post_url: str = None,
             **kwargs,
@@ -26,9 +25,9 @@ class TestCommentSuite(unittest.TestCase):
 
         self.config = config
         self.input_text = input_text
-        self.need_check_output = need_check_output
         self.web_login_func = web_login_func
         self.post_url = post_url
+        self.data = kwargs.get("data", {})
 
     def setUp(self):
         self.driver = webdriver.Chrome(self.config.driver_path)
@@ -48,7 +47,6 @@ class TestCommentSuite(unittest.TestCase):
         if text is not None:
             self.driver.find_element(*locator).send_keys(text)
         self.driver.find_element(By.CSS_SELECTOR, ".active:nth-child(3)").click()
-
     def is_element_present(self, how, what):
         try:
             self.driver.find_element(by=how, value=what)
@@ -57,12 +55,14 @@ class TestCommentSuite(unittest.TestCase):
         return True
 
     def _check_output(self):
-        self.assertTrue(self.is_element_present(By.XPATH, f"//a[contains(text(),\'{self.config.web_username}\')]"))
+        output = self.is_element_present(By.XPATH, f"//a[contains(text(),\'{self.config.web_username}\')]")
+        return output
 
     def general_test(self):
         self._base_step(self.input_text)
-        if self.need_check_output:
-            self._check_output()
+        output = self._check_output()
+        self.data["output"] = "PASSED" if output else "FAILED"
+        self.assertTrue(output)
 
 
 if __name__ == "__main__":
@@ -71,5 +71,8 @@ if __name__ == "__main__":
     config = Config()
     suite = unittest.TestSuite()
     suite.addTest(
-        TestCommentSuite(config=config, post_url="https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"))
+        TestCommentSuite(config=config,
+                         post_url="https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"))
     unittest.TextTestRunner().run(suite)
+
+    # "
