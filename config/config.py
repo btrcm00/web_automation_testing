@@ -8,8 +8,8 @@ load_dotenv()
 class Config:
     driver_path = PROJ_PATH + "/chromedriver/chromedriver.exe"
     web_url = os.getenv("WEB_URL", "https://tinhte.vn/")
-    web_username = os.getenv("minhbtcm00")
-    web_password = os.getenv("1813060")
+    web_username = os.getenv("WEB_USERNAME")
+    web_password = os.getenv("WEB_PASSWORD")
     locator_wait_time = int(os.getenv("WAIT_TIME", 10))
 
     input_data_folder = PROJ_PATH + "/data/input_data"
