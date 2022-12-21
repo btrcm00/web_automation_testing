@@ -1,12 +1,11 @@
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium import webdriver
+import unittest
 import sys
 
 sys.path.append(".")
-
-import unittest
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException
 
 
 class TestSearchSuite(unittest.TestCase):
@@ -34,8 +33,10 @@ class TestSearchSuite(unittest.TestCase):
     def _base_step(self, text: str = None):
         self.driver.find_element(By.CSS_SELECTOR, ".search-textbox").click()
         if text is not None:
-            self.driver.find_element(By.CSS_SELECTOR, ".search-textbox").send_keys(text)
-        self.driver.find_element(By.CSS_SELECTOR, ".search-textbox").send_keys(Keys.ENTER)
+            self.driver.find_element(
+                By.CSS_SELECTOR, ".search-textbox").send_keys(text)
+        self.driver.find_element(
+            By.CSS_SELECTOR, ".search-textbox").send_keys(Keys.ENTER)
 
     def is_element_present(self, how, what):
         try:
@@ -47,7 +48,7 @@ class TestSearchSuite(unittest.TestCase):
     def _check_output(self):
         not_found_ele = "//div[@id=\'content\']/div/div/div/div/div[2]/h1"
         found_ele = "//div[@id=\'content\']/div/div/div/div/div/div[2]/h1"
-        self.assertTrue(self.is_element_present(By.XPATH, not_found_ele) or \
+        self.assertTrue(self.is_element_present(By.XPATH, not_found_ele) or
                         self.is_element_present(By.XPATH, found_ele))
 
     def general_test(self):

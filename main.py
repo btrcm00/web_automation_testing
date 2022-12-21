@@ -34,8 +34,8 @@ class TestWebModules:
         driver.find_element(By.ID, "ctrl_pageLogin_password2").send_keys(Keys.ENTER)
 
     def test_func(self, data: Dict):
-        if any(param not in data.keys() for param in self.required_params):
-            raise "NEED PASS ENOUGH PARAM!!!"
+        # if any(param not in data.keys() for param in self.required_params):
+        #     raise "NEED PASS ENOUGH PARAM!!!"
         suite = unittest.TestSuite()
         suite.addTest(self.module_class(config=config,
                                         web_login_func=self.web_login,
@@ -53,17 +53,9 @@ class TestWebModules:
 
 
 if __name__ == "__main__":
-    # Ví dụ test module Search
     config = Config()
-    # t = TestWebModules(module_name="comment", config=config)
-    # data = {"input_text": "hay!",
-    #               "need_check_output": True,
-    #               "post_url": "https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"}
-    # t.test_func(data=data)
-
+    extra_data = {
+        "post_url": "https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"}
+    # t = TestWebModules(module_name="comment", config=config, extra_data=extra_data)
     t = TestWebModules(module_name="search", config=config)
-    data = {"input_text": "hay!",
-            "need_check_output": True,
-            "post_url": "https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"}
-    # t.test_func(data=data)
     t.run_script_with_testdata(data_file_name="data_example.xlsx")
