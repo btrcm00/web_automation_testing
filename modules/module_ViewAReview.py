@@ -127,14 +127,7 @@ class TestVisitareview():
     self.driver.get("https://tinhte.vn/thread/hau-world-cup-cac-cau-thu-va-hlv-deo-dong-ho-gi-toi-qatar.3612625/?ta_from_block=home_featured_threads")
     self.driver.set_window_size(976, 1040)
     self.driver.find_element(By.CSS_SELECTOR, ".jsx-2265512871:nth-child(1) > .jsx-725335046 g:nth-child(2) > path").click()
-  
-  def test_vAuser(self):
-  
-  def test_vPcom(self):
-    self.driver.get(self.web_url)
-    self.driver.set_window_size(1936, 1056)
-    self.driver.find_element(By.CSS_SELECTOR, "#ontheroad .jsx-131847778:nth-child(2)").click()
-  
+    
   def test_vTasGH(self):
     self.driver.get(self.web_url)
     self.driver.set_window_size(974, 1040)
