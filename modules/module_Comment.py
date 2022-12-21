@@ -1,14 +1,13 @@
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
+from selenium.common import NoSuchElementException
+from selenium import webdriver
+import time
+import unittest
 import sys
 
 sys.path.append(".")
-
-import unittest
-
-from selenium import webdriver
-from selenium.common import NoSuchElementException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 class TestCommentSuite(unittest.TestCase):
@@ -48,7 +47,6 @@ class TestCommentSuite(unittest.TestCase):
         if text is not None:
             self.driver.find_element(*locator).send_keys(text)
         self.driver.find_element(By.CSS_SELECTOR, ".active:nth-child(3)").click()
-
     def is_element_present(self, how, what):
         try:
             self.driver.find_element(by=how, value=what)
@@ -76,3 +74,5 @@ if __name__ == "__main__":
         TestCommentSuite(config=config,
                          post_url="https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"))
     unittest.TextTestRunner().run(suite)
+
+    # "

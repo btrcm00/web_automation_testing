@@ -36,8 +36,8 @@ class TestWebModules:
         driver.find_element(By.ID, "ctrl_pageLogin_password2").send_keys(Keys.ENTER)
 
     def test_func(self, data: Dict):
-        if any(param not in data.keys() for param in self.required_params):
-            raise "NEED PASS ENOUGH PARAM!!!"
+        # if any(param not in data.keys() for param in self.required_params):
+        #     raise "NEED PASS ENOUGH PARAM!!!"
         suite = unittest.TestSuite()
         suite.addTest(self.module_class(config=config,
                                         web_login_func=self.web_login,
