@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append(".")
 
 import unittest
@@ -27,6 +28,7 @@ class TestCommentSuite(unittest.TestCase):
         self.input_text = input_text
         self.web_login_func = web_login_func
         self.post_url = post_url
+        self.data = kwargs.get("data", {})
 
     def setUp(self):
         self.driver = webdriver.Chrome(self.config.driver_path)
@@ -56,12 +58,14 @@ class TestCommentSuite(unittest.TestCase):
 
     def _check_output(self):
         output = self.is_element_present(By.XPATH, f"//a[contains(text(),\'{self.config.web_username}\')]")
-        return "PASSED" if output else "FAILED"
+        return output
 
     def general_test(self):
         self._base_step(self.input_text)
-        return self._check_output()
-            
+        output = self._check_output()
+        self.data["output"] = "PASSED" if output else "FAILED"
+        self.assertTrue(output)
+
 
 if __name__ == "__main__":
     from config.config import Config
@@ -69,5 +73,6 @@ if __name__ == "__main__":
     config = Config()
     suite = unittest.TestSuite()
     suite.addTest(
-        TestCommentSuite(config=config, post_url="https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"))
+        TestCommentSuite(config=config,
+                         post_url="https://tinhte.vn/thread/elon-musk-hoi-y-kien-nguoi-dung-ve-viec-co-nen-tu-chuc-ceo-cua-twitter-hay-khong.3611655"))
     unittest.TextTestRunner().run(suite)

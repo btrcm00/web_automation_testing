@@ -19,6 +19,7 @@ class TestSearchSuite(unittest.TestCase):
         super().__init__("general_test")
         self.config = config
         self.input_text = input_text
+        self.data = kwargs.get("data", {})
 
     def setUp(self):
         self.driver = webdriver.Chrome(self.config.driver_path)
@@ -44,18 +45,17 @@ class TestSearchSuite(unittest.TestCase):
         not_found_ele = "//div[@id=\'content\']/div/div/div/div/div[2]/h1"
         found_ele = "//div[@id=\'content\']/div/div/div/div/div/div[2]/h1"
         return self.is_element_present(By.XPATH, not_found_ele) or self.is_element_present(By.XPATH, found_ele)
-        
 
     def general_test(self):
         self._base_step(self.input_text)
         output = self._check_output()
-        print(888888888888,output)
-        return "PASSED" if output else "FAILED"
+        self.data["output"] = "PASSED" if output else "FAILED"
+        self.assertTrue(output)
 
 
 if __name__ == "__main__":
     from config.config import Config
     config = Config()
     suite = unittest.TestSuite()
-    suite.addTest(TestSearchSuite(config=config))
+    suite.addTest(TestSearchSuite(config=config, input_text="hihi"))
     unittest.TextTestRunner().run(suite)
