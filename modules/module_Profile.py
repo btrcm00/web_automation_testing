@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append(".")
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -14,26 +16,25 @@ class TestProfileSuite(unittest.TestCase):
     def __init__(
             self,
             config,
-            testcase_name: str = None,
             input_text: str = None,
-            need_check_output: bool = True,
+            web_login_func=None,
+            post_url: str = None,
             **kwargs,
     ):
-        testcase_name = f"test_{testcase_name}" if testcase_name else "general_test"
-        if testcase_name == "general_test" and input_text is None:
-            raise ValueError("Must specify input text if want use 'general_test'")
-        if not hasattr(self, testcase_name):
-            raise AttributeError(f"{testcase_name} not implemented")
-        super().__init__(testcase_name)
-        self.input_text = input_text
-        self.need_check_output = need_check_output
-        self.driver_path = config.path
-        self.web_url = config.web_url
+        if not hasattr(self, "general_test"):
+            raise AttributeError("general_test not implemented")
+        super().__init__("general_test")
 
-    def setup_method(self, method):
-        self.driver = webdriver.Chrome(self.driver_path)
-        self.driver.get(self.web_url)
-        self.vars = {}
+        self.config = config
+        self.input_text = input_text
+        self.web_login_func = web_login_func
+        self.post_url = post_url
+        self.data = kwargs.get("data", {})
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(self.config.driver_path)
+        self.driver.get(self.post_url)
+        self.web_login_func(self.driver)
   
     def teardown_method(self, method):
         self.driver.quit()
